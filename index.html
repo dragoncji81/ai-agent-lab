@@ -16,6 +16,7 @@
   --ok:#1E8E3E; --warn:#C2410C; --warn-soft:#FDF0E7;
   --code-bg:#1D1D1F; --code-ink:#F5F5F7;
   --shadow:0 2px 14px rgba(0,0,0,.06);
+  --claude:#B9532B; --codex:#1D1D1F;
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
@@ -25,6 +26,7 @@
     --ok:#30D158; --warn:#FF9F0A; --warn-soft:#3A2508;
     --code-bg:#2C2C2E; --code-ink:#F5F5F7;
     --shadow:none;
+    --claude:#F0875F; --codex:#F5F5F7;
   }
 }
 :root[data-theme="dark"]{
@@ -34,6 +36,7 @@
   --ok:#30D158; --warn:#FF9F0A; --warn-soft:#3A2508;
   --code-bg:#2C2C2E; --code-ink:#F5F5F7;
   --shadow:none;
+  --claude:#F0875F; --codex:#F5F5F7;
 }
 *{box-sizing:border-box}
 html{scroll-snap-type:y mandatory;scroll-behavior:smooth}
@@ -108,6 +111,38 @@ ul.clean li{margin:4px 0}
   font-size:15px;margin-top:16px}
 .note b{color:var(--warn)}
 
+/* Claude · Codex 구분 */
+.tag{display:inline-block;font-size:12px;font-weight:700;border:1.5px solid currentColor;border-radius:7px;
+  padding:0 7px;margin-right:6px;line-height:1.6;vertical-align:1px}
+.tag.cl{color:var(--claude)} .tag.cx{color:var(--codex)}
+.tools{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+@media (max-width:760px){.tools{grid-template-columns:1fr}}
+.tools > div{background:var(--tile);border:1px solid var(--line);border-radius:12px;padding:10px 14px;
+  font-size:14px;color:var(--muted)}
+.tools b{color:var(--ink)}
+.card.claude{border-top:4px solid var(--claude)}
+.card.codex{border-top:4px solid var(--codex)}
+.steps{margin:8px 0 0;padding-left:1.2em;color:var(--muted);font-size:15px}
+.steps li{margin:4px 0}
+
+/* 스크린샷 자리 */
+.shot{margin:0;border-radius:16px;border:1px solid var(--line);overflow:hidden;background:var(--tile);box-shadow:var(--shadow)}
+.shot img{display:block;width:100%;height:auto}
+.shot figcaption{font-size:13px;color:var(--muted);padding:8px 14px;border-top:1px solid var(--line)}
+.shot.missing img{display:none}
+.shot.missing::before{content:"📷  스크린샷 자리\A" attr(data-file);white-space:pre;display:flex;align-items:center;
+  justify-content:center;text-align:center;aspect-ratio:16/10;color:var(--muted);font-size:14px;line-height:1.8;
+  background:repeating-linear-gradient(45deg,var(--tile-alt) 0 12px,var(--tile) 12px 24px);
+  border-bottom:2px dashed var(--line)}
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:22px;align-items:center}
+@media (max-width:860px){.split{grid-template-columns:1fr}}
+ol.parts{margin:0;padding:0;list-style:none;counter-reset:p}
+ol.parts li{counter-increment:p;position:relative;padding:8px 0 8px 38px;border-bottom:1px solid var(--line);font-size:15px}
+ol.parts li:last-child{border-bottom:0}
+ol.parts li::before{content:counter(p);position:absolute;left:0;top:8px;width:26px;height:26px;border-radius:50%;
+  background:var(--accent);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center}
+ol.parts li span{display:block;color:var(--muted);font-size:14px}
+
 /* 프롬프트 */
 .prompt{position:relative;background:var(--code-bg);color:var(--code-ink);border-radius:16px;
   padding:18px 20px;margin-top:14px}
@@ -174,7 +209,7 @@ tr:last-child td{border-bottom:0}
   <div class="wrap reveal">
     <p class="eyebrow">보은SW학습공동체 연수 · 2026. 11. 26.</p>
     <h1>나만의 <span>AI Agent</span><br>업무 비서 만들기</h1>
-    <p class="lead">답만 해 주는 AI에서, 일을 끝내 주는 AI로.<br>내 컴퓨터의 파일을 직접 열고, 고치고, 정리하는 AI를 함께 써 봅니다.</p>
+    <p class="lead">답만 해 주는 AI에서, 일을 끝내 주는 AI로.<br>내 컴퓨터의 파일을 직접 열고, 고치고, 정리하는 AI를 함께 써 봅니다.<br><span class="tag cl">Claude</span>로 시연하고, <span class="tag cx">Codex</span>로도 똑같이 따라 할 수 있습니다.</p>
     <div class="meta">
       <span class="chip blue">강사 · 각리초 조정익</span>
       <span class="chip">실습 5개 · 약 90분</span>
@@ -201,13 +236,26 @@ tr:last-child td{border-bottom:0}
 <!-- 준비 -->
 <section class="slide" id="ready" data-title="준비" data-group="준비">
   <div class="wrap reveal">
-    <p class="eyebrow">준비 · 3분</p>
-    <h2 class="title">앱 하나, 폴더 하나.</h2>
-    <p class="lead">오늘은 Claude 데스크톱 앱의 <b>Code 탭</b>을 씁니다. 같은 일을 OpenAI Codex로도 할 수 있습니다.</p>
-    <div class="grid g3">
-      <div class="card"><span class="icon">⬇️</span><h3>1. 앱 받기</h3><p><a href="https://claude.com/download" target="_blank" rel="noopener">claude.com/download</a>에서 Windows용을 내려받아 설치합니다.</p></div>
-      <div class="card"><span class="icon">🔑</span><h3>2. 로그인</h3><p>내 계정으로 로그인한 뒤 위쪽의 <b>Code</b> 탭을 누릅니다. (유료 요금제 필요)</p></div>
-      <div class="card"><span class="icon">📁</span><h3>3. 실습 폴더</h3><p>아래 파일을 받아 압축을 풀고, Code 탭에서 그 폴더를 작업 폴더로 고릅니다.</p></div>
+    <p class="eyebrow">준비 · 5분</p>
+    <h2 class="title">도구 하나 고르고, 폴더 하나.</h2>
+    <p class="lead">이미 쓰고 있는 계정에 맞춰 고르세요. 강사는 Claude로 시연하지만, 실습 프롬프트는 두 도구에서 똑같이 쓸 수 있습니다.</p>
+    <div class="grid g2">
+      <div class="card claude">
+        <h3><span class="tag cl">Claude</span>Claude Code <span class="chip blue" style="margin:0 0 0 4px">오늘 시연</span></h3>
+        <ol class="steps">
+          <li><a href="https://claude.com/download" target="_blank" rel="noopener">claude.com/download</a>에서 Claude 앱 설치</li>
+          <li>Claude 계정으로 로그인 (유료 요금제)</li>
+          <li>위쪽 <b>Code</b> 탭 → 실습 폴더를 작업 폴더로 선택</li>
+        </ol>
+      </div>
+      <div class="card codex">
+        <h3><span class="tag cx">Codex</span>OpenAI Codex</h3>
+        <ol class="steps">
+          <li><a href="https://openai.com/ko-KR/codex/" target="_blank" rel="noopener">openai.com/codex</a>에서 Codex 앱 설치</li>
+          <li>ChatGPT 계정으로 로그인 (유료 요금제)</li>
+          <li>실습 폴더를 프로젝트(작업 폴더)로 열기</li>
+        </ol>
+      </div>
     </div>
     <div class="meta" style="gap:12px">
       <a class="dl survey" data-survey="pre" href="#" target="_blank" rel="noopener">📝 사전 설문 하기</a>
@@ -265,7 +313,26 @@ tr:last-child td{border-bottom:0}
     </div>
     <div class="grid g2">
       <div class="card"><h3>모델 고르기</h3><p>어려운 일은 가장 똑똑한 모델, 단순 반복은 빠르고 가벼운 모델. 앱 아래쪽에서 바꿀 수 있습니다.</p></div>
-      <div class="card"><h3>이름 정리</h3><p><b>Claude Code</b>(Anthropic) · <b>Codex</b>(OpenAI). 둘 다 "내 컴퓨터에서 일하는 AI Agent"입니다.</p></div>
+      <div class="card"><h3>이름 정리</h3><p><span class="tag cl">Claude</span><b>Claude Code</b>(Anthropic) · <span class="tag cx">Codex</span><b>Codex</b>(OpenAI). 회사는 달라도 둘 다 "내 컴퓨터에서 일하는 AI Agent"입니다.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="Claude와 Codex" data-group="01">
+  <div class="wrap reveal">
+    <p class="eyebrow">01 · Claude와 Codex</p>
+    <h2 class="title">회사는 달라도, 쓰는 법은 같다.</h2>
+    <p class="lead">한쪽을 익히면 다른 쪽도 바로 씁니다. 다른 점은 몇 군데뿐입니다.</p>
+    <div style="overflow-x:auto">
+    <table>
+      <tr><th></th><th><span class="tag cl">Claude</span>Claude Code</th><th><span class="tag cx">Codex</span>Codex</th></tr>
+      <tr><td><b>만든 곳 · 계정</b></td><td>Anthropic · Claude 계정</td><td>OpenAI · ChatGPT 계정</td></tr>
+      <tr><td><b>쓰는 곳</b></td><td>Claude 앱의 Code 탭, VS Code, 터미널</td><td>Codex 앱, VS Code, 터미널</td></tr>
+      <tr><td><b>규칙 파일</b></td><td><code>CLAUDE.md</code> 를 자동으로 읽음</td><td><code>AGENTS.md</code> 를 자동으로 읽음</td></tr>
+      <tr><td><b>권한</b></td><td>바꾸기 전에 승인 창 · 모드로 조절</td><td>바꾸기 전에 승인 창 · 모드로 조절</td></tr>
+      <tr><td><b>도구 연결(MCP)</b></td><td>가능</td><td>가능</td></tr>
+      <tr><td><b>오늘 실습 프롬프트</b></td><td colspan="2" style="text-align:center">✓ 두 도구에 똑같이 붙여 넣으면 됩니다</td></tr>
+    </table>
     </div>
   </div>
 </section>
@@ -282,12 +349,142 @@ tr:last-child td{border-bottom:0}
   </div>
 </section>
 
+<!-- 앱 사용법 -->
+<section class="slide" id="app" data-title="앱 사용법 · 화면 구성" data-group="앱" data-toc="sec">
+  <div class="wrap reveal">
+    <p class="eyebrow">앱 사용법 · 화면 구성</p>
+    <h2 class="title">화면은 네 부분만 알면 된다.</h2>
+    <div class="split" style="margin-top:18px">
+      <ol class="parts">
+        <li>왼쪽 목록<span>지난 대화(세션)들. 새 일은 새 세션으로 시작합니다.</span></li>
+        <li>작업 폴더<span>AI가 들어와 일할 폴더. 오늘은 실습 폴더.</span></li>
+        <li>가운데 대화<span>AI가 무엇을 하는지 실시간으로 보여 줍니다.</span></li>
+        <li>아래 입력창<span>여기에 말로 지시합니다. 모델·권한도 여기서 바꿉니다.</span></li>
+      </ol>
+      <figure class="shot" data-file="captures/claude-home.png">
+        <img src="captures/claude-home.png" alt="Claude 앱 Code 탭 첫 화면" onerror="this.parentNode.classList.add('missing')">
+        <figcaption><span class="tag cl">Claude</span>Claude 앱 · Code 탭 첫 화면</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="앱 사용법 · 폴더 열기" data-group="앱">
+  <div class="wrap reveal">
+    <p class="eyebrow">앱 사용법 · 폴더 열기</p>
+    <h2 class="title">AI에게 폴더 열쇠를 준다.</h2>
+    <div class="split" style="margin-top:18px">
+      <div>
+        <p class="lead" style="margin-bottom:16px">AI는 내가 고른 폴더 안에서만 일합니다. 실습 폴더를 압축 푼 위치를 기억해 두세요.</p>
+        <div class="tools" style="grid-template-columns:1fr">
+          <div><span class="tag cl">Claude</span>Code 탭 입력창 위의 <b>폴더 선택</b> → 압축 푼 <b>실습폴더</b> 선택</div>
+          <div><span class="tag cx">Codex</span>새 작업에서 <b>프로젝트(폴더) 열기</b> → <b>실습폴더</b> 선택</div>
+        </div>
+      </div>
+      <figure class="shot" data-file="captures/claude-folder.png">
+        <img src="captures/claude-folder.png" alt="작업 폴더를 고르는 화면" onerror="this.parentNode.classList.add('missing')">
+        <figcaption>작업 폴더를 고르는 화면</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="앱 사용법 · 권한과 승인" data-group="앱">
+  <div class="wrap reveal">
+    <p class="eyebrow">앱 사용법 · 권한과 승인</p>
+    <h2 class="title">파일을 바꾸기 전에, 먼저 묻는다.</h2>
+    <div class="split" style="margin-top:18px">
+      <div>
+        <ol class="parts">
+          <li>승인 창이 뜨면 읽는다<span>어떤 파일을, 어떤 명령으로 바꾸려는지 적혀 있습니다.</span></li>
+          <li>허용 또는 거부<span>모르겠으면 거부하고 "왜 필요해?"라고 물어보세요.</span></li>
+          <li>익숙해지면 모드 조절<span>매번 묻기 → 편집은 자동 허용 → 계획 먼저 보기 등</span></li>
+        </ol>
+        <div class="tools" style="grid-template-columns:1fr">
+          <div><span class="tag cl">Claude</span>입력창 아래 <b>권한 모드</b>에서 선택</div>
+          <div><span class="tag cx">Codex</span>입력창 아래 <b>승인 모드</b>에서 선택 (읽기 전용 · 자동 · 전체 권한)</div>
+        </div>
+      </div>
+      <figure class="shot" data-file="captures/claude-permission.png">
+        <img src="captures/claude-permission.png" alt="승인 창 화면" onerror="this.parentNode.classList.add('missing')">
+        <figcaption>파일을 고치기 전에 뜨는 승인 창</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="앱 사용법 · 모델 고르기" data-group="앱">
+  <div class="wrap reveal">
+    <p class="eyebrow">앱 사용법 · 모델 고르기</p>
+    <h2 class="title">어려운 일엔 똑똑한 모델, 쉬운 일엔 빠른 모델.</h2>
+    <div class="split" style="margin-top:18px">
+      <div>
+        <div class="grid">
+          <div class="card"><h3>🧠 가장 똑똑한 모델</h3><p>엑셀 결산, 문서 작성처럼 틀리면 안 되는 일. 대신 사용량이 빨리 줄어듭니다.</p></div>
+          <div class="card"><h3>⚡ 빠른 모델</h3><p>파일 이름 바꾸기, 간단한 정리처럼 단순한 일.</p></div>
+        </div>
+        <p style="color:var(--muted);font-size:14px;margin-top:12px">두 앱 모두 입력창 근처의 모델 이름을 눌러 바꿉니다. 남은 사용량도 설정에서 확인할 수 있어요.</p>
+      </div>
+      <figure class="shot" data-file="captures/claude-model.png">
+        <img src="captures/claude-model.png" alt="모델 선택 메뉴" onerror="this.parentNode.classList.add('missing')">
+        <figcaption>모델 선택 메뉴</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="앱 사용법 · 지시하고 확인하기" data-group="앱">
+  <div class="wrap reveal">
+    <p class="eyebrow">앱 사용법 · 지시하고 확인하기</p>
+    <h2 class="title">말로 시키고, 눈으로 확인한다.</h2>
+    <div class="split" style="margin-top:18px">
+      <ol class="parts">
+        <li>말로 지시<span>"메모 읽고 엑셀 채워 줘"처럼 평소 말투로 충분합니다.</span></li>
+        <li>할 일 목록 보기<span>AI가 세운 계획과 지금 하는 단계가 표시됩니다.</span></li>
+        <li>바뀐 파일 확인<span>어떤 파일이 어떻게 바뀌었는지 직접 열어 봅니다.</span></li>
+        <li>다시 시키기<span>마음에 안 들면 "합계가 틀렸어, 다시 봐 줘"라고 이어서 말합니다.</span></li>
+      </ol>
+      <figure class="shot" data-file="captures/claude-result.png">
+        <img src="captures/claude-result.png" alt="작업이 끝난 화면" onerror="this.parentNode.classList.add('missing')">
+        <figcaption>작업이 끝나고 결과를 알려 주는 화면</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="앱 사용법 · Codex로 하려면" data-group="앱">
+  <div class="wrap reveal">
+    <p class="eyebrow">앱 사용법 · Codex로 하려면</p>
+    <h2 class="title">Codex도 자리만 조금 다르다.</h2>
+    <div class="split" style="margin-top:18px">
+      <div style="overflow-x:auto">
+        <table>
+          <tr><th>하는 일</th><th><span class="tag cl">Claude</span></th><th><span class="tag cx">Codex</span></th></tr>
+          <tr><td>시작</td><td>Claude 앱 → Code 탭</td><td>Codex 앱</td></tr>
+          <tr><td>폴더</td><td>폴더 선택</td><td>프로젝트 열기</td></tr>
+          <tr><td>권한</td><td>권한 모드</td><td>승인 모드</td></tr>
+          <tr><td>규칙 파일</td><td>CLAUDE.md</td><td>AGENTS.md</td></tr>
+          <tr><td>지시</td><td colspan="2" style="text-align:center">같은 프롬프트 그대로</td></tr>
+        </table>
+      </div>
+      <figure class="shot" data-file="captures/codex-home.png">
+        <img src="captures/codex-home.png" alt="Codex 앱 첫 화면" onerror="this.parentNode.classList.add('missing')">
+        <figcaption><span class="tag cx">Codex</span>Codex 앱 첫 화면</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
 <!-- 02 -->
 <section class="slide section-cover" id="s2" data-title="02 로컬 작업" data-group="02">
   <div class="wrap reveal">
     <p class="big">02</p>
     <h2 class="title">로컬 작업</h2>
-    <p class="lead">내 컴퓨터에 있는 파일을 AI가 직접 다룹니다.</p>
+    <p class="lead">내 컴퓨터에 있는 파일을 AI가 직접 다룹니다.<br>프롬프트를 복사해서, 쓰는 도구의 입력창에 붙여 넣으세요.</p>
+    <div class="tools">
+      <div><span class="tag cl">Claude</span>Code 탭에서 실습 폴더 선택 → 아래 입력창에 붙여 넣기</div>
+      <div><span class="tag cx">Codex</span>실습 폴더를 프로젝트로 열기 → 입력창에 붙여 넣기</div>
+    </div>
   </div>
 </section>
 
@@ -357,7 +554,9 @@ tr:last-child td{border-bottom:0}
     <div class="grid g3">
       <div class="card"><span class="icon">📄</span><h3>kordoc</h3><p>HWP·HWPX 한글 문서를 읽고, 빈칸을 채우고, 새로 만듭니다.</p><p style="margin-top:6px"><a href="https://github.com/chrisryugj/kordoc" target="_blank" rel="noopener">github.com/chrisryugj/kordoc</a></p></div>
       <div class="card"><span class="icon">⚖️</span><h3>korean-law</h3><p>법제처 자료로 법령·조례·판례를 찾아 줍니다. 법제처 Open API 키가 필요합니다.</p><p style="margin-top:6px"><a href="https://github.com/chrisryugj/korean-law-mcp" target="_blank" rel="noopener">github.com/chrisryugj/korean-law-mcp</a></p></div>
-      <div class="card"><span class="icon">🔌</span><h3>연결 방법</h3><p>각 저장소의 설치 안내를 AI에게 그대로 주고 "이거 설치해 줘"라고 하면 대부분 알아서 합니다.</p></div>
+      <div class="card"><span class="icon">🔌</span><h3>연결 방법</h3><p>각 저장소의 설치 안내 주소를 AI에게 주고 "이거 설치해 줘"라고 하면 대부분 알아서 합니다.</p>
+        <p style="margin-top:8px;font-size:14px"><span class="tag cl">Claude</span>Claude 설정에 등록</p>
+        <p style="font-size:14px"><span class="tag cx">Codex</span>Codex 설정(config.toml)에 등록</p></div>
     </div>
   </div>
 </section>
@@ -417,6 +616,10 @@ tr:last-child td{border-bottom:0}
       <button class="copy">프롬프트 복사</button>
       <pre>'3 웹 작업 - 학습준비물' 폴더의 '학습준비물 메모.md'를 읽고, 브라우저로 가격을 찾아서 '학습준비물 빈 양식.xlsx'를 채워 줘. 합계가 예산을 넘지 않는지 마지막에 확인해 줘.</pre>
     </div>
+    <div class="tools">
+      <div><span class="tag cl">Claude</span>Chrome 확장(Claude in Chrome)을 켜 두면 내 크롬을 직접 조작합니다.</div>
+      <div><span class="tag cx">Codex</span>Codex의 브라우저 기능을 켜 두면 같은 프롬프트로 검색합니다.</div>
+    </div>
     <div class="note"><b>주의</b> · 결제는 AI에게 맡기지 않습니다. 장바구니까지만, 결제 버튼은 사람이 누릅니다.</div>
   </div>
 </section>
@@ -443,7 +646,7 @@ tr:last-child td{border-bottom:0}
    ├─ 학습준비물 구입.md
    └─ 학부모 상담 주간.md</div>
       <div class="grid">
-        <div class="card"><h3>AGENTS.md</h3><p>"너는 6학년 담임의 업무 비서다"처럼 역할과 일하는 순서를 적습니다. Codex는 자동으로 읽고, Claude는 CLAUDE.md를 자동으로 읽습니다.</p></div>
+        <div class="card"><h3>AGENTS.md</h3><p>"너는 6학년 담임의 업무 비서다"처럼 역할과 일하는 순서를 적습니다. <span class="tag cx">Codex</span>는 이 파일을 자동으로 읽고, <span class="tag cl">Claude</span>는 같은 내용을 CLAUDE.md로 두면 자동으로 읽습니다.</p></div>
         <div class="card"><h3>HOME.md</h3><p>지금 진행 중인 카드와 마감일을 한눈에 보는 표입니다.</p></div>
         <div class="card"><h3>카드</h3><p>일 하나에 파일 하나. 할 일 체크박스와 날짜별 기록이 들어갑니다.</p></div>
       </div>
@@ -459,6 +662,10 @@ tr:last-child td{border-bottom:0}
       <div class="label">1단계 · 출근</div>
       <button class="copy">프롬프트 복사</button>
       <pre>'4 미니 비서' 폴더의 AGENTS.md를 읽고 그 규칙대로 내 비서가 되어 줘. 오늘 뭐 해?</pre>
+    </div>
+    <div class="tools">
+      <div><span class="tag cl">Claude</span>위 프롬프트 그대로. (Claude는 AGENTS.md를 직접 읽으라고 말해 줘야 합니다)</div>
+      <div><span class="tag cx">Codex</span>'4 미니 비서' 폴더를 프로젝트로 열면 AGENTS.md를 자동으로 읽어서 "오늘 뭐 해?"만 해도 됩니다.</div>
     </div>
     <div class="prompt">
       <div class="label">2단계 · 일 끝냄</div>
@@ -503,15 +710,15 @@ tr:last-child td{border-bottom:0}
     <div style="overflow-x:auto;margin-top:18px">
     <table>
       <tr><th>이름</th><th>한마디로</th><th>예시</th></tr>
-      <tr><td><b>AGENTS.md / CLAUDE.md</b></td><td>이 폴더에서 지킬 <b>규칙</b></td><td>"개인정보는 적지 않는다"</td></tr>
+      <tr><td><b>CLAUDE.md / AGENTS.md</b></td><td>이 폴더에서 지킬 <b>규칙</b> (Claude / Codex)</td><td>"개인정보는 적지 않는다"</td></tr>
       <tr><td><b>Skills</b></td><td>특정 일을 잘하는 <b>요령 묶음</b></td><td>"우리 학교 공문 쓰는 법"</td></tr>
       <tr><td><b>MCP</b></td><td>바깥 프로그램과 잇는 <b>도구</b></td><td>한글 문서, 법령 검색, 캘린더</td></tr>
     </table>
     </div>
     <div class="grid g3" style="margin-top:16px">
-      <div class="card alt"><h3>데스크톱 앱</h3><p>처음 시작하기 가장 쉬움</p></div>
-      <div class="card alt"><h3>VS Code</h3><p>파일을 보면서 함께 작업</p></div>
-      <div class="card alt"><h3>터미널(CLI)</h3><p>익숙해지면 가장 빠름</p></div>
+      <div class="card alt"><h3>데스크톱 앱</h3><p>처음 시작하기 가장 쉬움<br><span style="font-size:13px">Claude 앱 · Codex 앱</span></p></div>
+      <div class="card alt"><h3>VS Code</h3><p>파일을 보면서 함께 작업<br><span style="font-size:13px">두 도구 모두 확장 프로그램 있음</span></p></div>
+      <div class="card alt"><h3>터미널(CLI)</h3><p>익숙해지면 가장 빠름<br><span style="font-size:13px">claude · codex 명령</span></p></div>
     </div>
   </div>
 </section>
@@ -566,7 +773,7 @@ var SURVEY_POST = "https://forms.gle/NH31fhLPMMwgRbXg7";   // 사후 설문
     var a = document.createElement('a');
     a.href = '#' + s.id;
     a.textContent = s.dataset.title || ('슬라이드 ' + (i + 1));
-    a.className = s.classList.contains('section-cover') || i < 2 || s.id === 'ready' ? 'sec' : 'sub';
+    a.className = s.classList.contains('section-cover') || i < 2 || s.id === 'ready' || s.dataset.toc === 'sec' ? 'sec' : 'sub';
     a.addEventListener('click', function(){ if(!isWide()) closeToc(); });
     tocList.appendChild(a);
   });
