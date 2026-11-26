@@ -134,6 +134,16 @@ ul.clean li{margin:4px 0}
   justify-content:center;text-align:center;aspect-ratio:16/10;color:var(--muted);font-size:14px;line-height:1.8;
   background:repeating-linear-gradient(45deg,var(--tile-alt) 0 12px,var(--tile) 12px 24px);
   border-bottom:2px dashed var(--line)}
+.shots{display:grid;gap:10px}
+.shots.two{grid-template-columns:1fr 1fr;align-items:start}
+.shots.three{grid-template-columns:repeat(3,minmax(0,1fr));align-items:start}
+@media (max-width:760px){.shots.two,.shots.three{grid-template-columns:1fr}}
+.credit{font-size:12px;color:var(--muted);margin-top:10px;text-align:right}
+.shot img{cursor:zoom-in;max-height:26vh;width:100%;object-fit:contain;background:var(--tile-alt)}
+.shot.big img{max-height:60vh}
+.zoom{position:fixed;inset:0;z-index:80;background:rgba(0,0,0,.82);display:none;align-items:center;justify-content:center;padding:16px;cursor:zoom-out}
+.zoom.open{display:flex}
+.zoom img{max-width:100%;max-height:100%;border-radius:10px}
 .split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:22px;align-items:center}
 @media (max-width:860px){.split{grid-template-columns:1fr}}
 ol.parts{margin:0;padding:0;list-style:none;counter-reset:p}
@@ -201,6 +211,7 @@ tr:last-child td{border-bottom:0}
   <div id="tocList"></div>
 </nav>
 <div class="scrim" id="scrim"></div>
+<div class="zoom" id="zoom"><img alt=""></div>
 
 <main id="top">
 
@@ -361,10 +372,13 @@ tr:last-child td{border-bottom:0}
         <li>가운데 대화<span>AI가 무엇을 하는지 실시간으로 보여 줍니다.</span></li>
         <li>아래 입력창<span>여기에 말로 지시합니다. 모델·권한도 여기서 바꿉니다.</span></li>
       </ol>
-      <figure class="shot" data-file="captures/claude-home.png">
-        <img src="captures/claude-home.png" alt="Claude 앱 Code 탭 첫 화면" onerror="this.parentNode.classList.add('missing')">
-        <figcaption><span class="tag cl">Claude</span>Claude 앱 · Code 탭 첫 화면</figcaption>
-      </figure>
+      <div>
+        <figure class="shot big">
+          <img src="captures/app-basic-1.png" alt="Codex 앱 전체 화면">
+          <figcaption><span class="tag cx">Codex</span>앱 전체 화면 · Claude 앱도 배치가 거의 같습니다</figcaption>
+        </figure>
+        <p class="credit">화면 출처: 양상경 선생님(인천효성남초) 강의 자료</p>
+      </div>
     </div>
   </div>
 </section>
@@ -381,10 +395,23 @@ tr:last-child td{border-bottom:0}
           <div><span class="tag cx">Codex</span>새 작업에서 <b>프로젝트(폴더) 열기</b> → <b>실습폴더</b> 선택</div>
         </div>
       </div>
-      <figure class="shot" data-file="captures/claude-folder.png">
-        <img src="captures/claude-folder.png" alt="작업 폴더를 고르는 화면" onerror="this.parentNode.classList.add('missing')">
-        <figcaption>작업 폴더를 고르는 화면</figcaption>
-      </figure>
+      <div>
+        <div class="shots two">
+          <figure class="shot">
+            <img src="captures/claude-file-menu.png" alt="Claude 앱 메뉴의 파일">
+            <figcaption><span class="tag cl">Claude</span>① 파일 메뉴</figcaption>
+          </figure>
+          <figure class="shot">
+            <img src="captures/claude-folder-pick.png" alt="Claude 앱 폴더 선택 창">
+            <figcaption><span class="tag cl">Claude</span>② 실습폴더 선택</figcaption>
+          </figure>
+        </div>
+        <figure class="shot" style="margin-top:10px">
+          <img src="captures/app-open-folder.png" alt="Codex 앱 파일 메뉴의 폴더 열기">
+          <figcaption><span class="tag cx">Codex</span>파일 메뉴 → 폴더 열기</figcaption>
+        </figure>
+        <p class="credit">화면 출처: 양상경 선생님(인천효성남초) 강의 자료</p>
+      </div>
     </div>
   </div>
 </section>
@@ -405,10 +432,17 @@ tr:last-child td{border-bottom:0}
           <div><span class="tag cx">Codex</span>입력창 아래 <b>승인 모드</b>에서 선택 (읽기 전용 · 자동 · 전체 권한)</div>
         </div>
       </div>
-      <figure class="shot" data-file="captures/claude-permission.png">
-        <img src="captures/claude-permission.png" alt="승인 창 화면" onerror="this.parentNode.classList.add('missing')">
-        <figcaption>파일을 고치기 전에 뜨는 승인 창</figcaption>
-      </figure>
+      <div>
+        <figure class="shot">
+          <img src="captures/claude-mode.png" alt="Claude 앱 모드 메뉴">
+          <figcaption><span class="tag cl">Claude</span>입력창의 모드 메뉴</figcaption>
+        </figure>
+        <figure class="shot" style="margin-top:10px">
+          <img src="captures/app-approve.png" alt="명령 실행을 허용할지 묻는 창">
+          <figcaption><span class="tag cx">Codex</span>명령 실행을 허용할지 묻는 승인 창</figcaption>
+        </figure>
+        <p class="credit">화면 출처: 양상경 선생님(인천효성남초) 강의 자료</p>
+      </div>
     </div>
   </div>
 </section>
@@ -425,10 +459,17 @@ tr:last-child td{border-bottom:0}
         </div>
         <p style="color:var(--muted);font-size:14px;margin-top:12px">두 앱 모두 입력창 근처의 모델 이름을 눌러 바꿉니다. 남은 사용량도 설정에서 확인할 수 있어요.</p>
       </div>
-      <figure class="shot" data-file="captures/claude-model.png">
-        <img src="captures/claude-model.png" alt="모델 선택 메뉴" onerror="this.parentNode.classList.add('missing')">
-        <figcaption>모델 선택 메뉴</figcaption>
-      </figure>
+      <div>
+        <figure class="shot">
+          <img src="captures/claude-model.png" alt="Claude 앱 모델 메뉴">
+          <figcaption><span class="tag cl">Claude</span>모델과 노력 수준 고르기</figcaption>
+        </figure>
+        <figure class="shot" style="margin-top:10px">
+          <img src="captures/app-model.png" alt="Codex 앱 모델 목록">
+          <figcaption><span class="tag cx">Codex</span>모델 목록</figcaption>
+        </figure>
+        <p class="credit">화면 출처: 양상경 선생님(인천효성남초) 강의 자료</p>
+      </div>
     </div>
   </div>
 </section>
@@ -444,10 +485,17 @@ tr:last-child td{border-bottom:0}
         <li>바뀐 파일 확인<span>어떤 파일이 어떻게 바뀌었는지 직접 열어 봅니다.</span></li>
         <li>다시 시키기<span>마음에 안 들면 "합계가 틀렸어, 다시 봐 줘"라고 이어서 말합니다.</span></li>
       </ol>
-      <figure class="shot" data-file="captures/claude-result.png">
-        <img src="captures/claude-result.png" alt="작업이 끝난 화면" onerror="this.parentNode.classList.add('missing')">
-        <figcaption>작업이 끝나고 결과를 알려 주는 화면</figcaption>
-      </figure>
+      <div>
+        <figure class="shot">
+          <img src="captures/app-basic-4.png" alt="입력창에 부탁을 적는 화면">
+          <figcaption>① 입력창에 평소 말투로 부탁</figcaption>
+        </figure>
+        <figure class="shot" style="margin-top:10px">
+          <img src="captures/app-basic-5.png" alt="바뀐 파일을 확인하는 화면">
+          <figcaption>② 바뀐 파일 확인</figcaption>
+        </figure>
+        <p class="credit">화면 출처: 양상경 선생님(인천효성남초) 강의 자료</p>
+      </div>
     </div>
   </div>
 </section>
@@ -467,10 +515,17 @@ tr:last-child td{border-bottom:0}
           <tr><td>지시</td><td colspan="2" style="text-align:center">같은 프롬프트 그대로</td></tr>
         </table>
       </div>
-      <figure class="shot" data-file="captures/codex-home.png">
-        <img src="captures/codex-home.png" alt="Codex 앱 첫 화면" onerror="this.parentNode.classList.add('missing')">
-        <figcaption><span class="tag cx">Codex</span>Codex 앱 첫 화면</figcaption>
-      </figure>
+      <div>
+        <figure class="shot">
+          <img src="captures/app-permission.png" alt="Codex 승인 모드 메뉴">
+          <figcaption><span class="tag cx">Codex</span>승인 모드: 승인 요청 · 나 대신 승인 · 전체 권한</figcaption>
+        </figure>
+        <figure class="shot" style="margin-top:10px">
+          <img src="captures/app-folder-pick.png" alt="Codex 폴더 선택 창">
+          <figcaption><span class="tag cx">Codex</span>폴더 선택 창에서 실습폴더 고르기</figcaption>
+        </figure>
+        <p class="credit">화면 출처: 양상경 선생님(인천효성남초) 강의 자료</p>
+      </div>
     </div>
   </div>
 </section>
@@ -537,6 +592,18 @@ tr:last-child td{border-bottom:0}
   </div>
 </section>
 
+<section class="slide" data-title="친목회 · 성공 화면" data-group="02">
+  <div class="wrap reveal">
+    <p class="eyebrow">02 · 친목회 회계 · 이렇게 나오면 성공</p>
+    <h2 class="title">엑셀을 띄워 놓고, 눈앞에서 채운다.</h2>
+    <figure class="shot big" style="margin-top:14px">
+      <img src="captures/app-excel-result.png" alt="오른쪽 칸에 띄운 회계 엑셀 결과">
+      <figcaption>10월 입금·지출이 들어가고 맨 위 결산이 다시 계산된 모습 (Codex 화면)</figcaption>
+    </figure>
+    <p class="credit">화면 출처: 양상경 선생님(인천효성남초) 강의 자료</p>
+  </div>
+</section>
+
 <!-- 03 -->
 <section class="slide section-cover" id="s3" data-title="03 MCP 시연" data-group="03">
   <div class="wrap reveal">
@@ -558,6 +625,22 @@ tr:last-child td{border-bottom:0}
         <p style="margin-top:8px;font-size:14px"><span class="tag cl">Claude</span>Claude 설정에 등록</p>
         <p style="font-size:14px"><span class="tag cx">Codex</span>Codex 설정(config.toml)에 등록</p></div>
     </div>
+  </div>
+</section>
+
+<section class="slide" data-title="KorDoc 설치 과정" data-group="03">
+  <div class="wrap reveal">
+    <p class="eyebrow">03 · KorDoc 설치 과정</p>
+    <h2 class="title">주소만 주면, 설치는 AI가 한다.</h2>
+    <div class="shots three" style="margin-top:14px">
+      <figure class="shot"><img src="captures/mcp-1-google.png" alt="구글에서 kordoc 검색"><figcaption>① 구글에서 kordoc 검색</figcaption></figure>
+      <figure class="shot"><img src="captures/mcp-2-github.png" alt="KorDoc GitHub 페이지"><figcaption>② GitHub 주소 복사</figcaption></figure>
+      <figure class="shot"><img src="captures/mcp-3-ask.png" alt="주소 붙여 설치 부탁"><figcaption>③ 주소 붙여 "설치해 줘"</figcaption></figure>
+      <figure class="shot"><img src="captures/mcp-4-node.png" alt="Node.js 설치 창"><figcaption>④ 필요하면 Node.js 설치</figcaption></figure>
+      <figure class="shot"><img src="captures/mcp-5-approve.png" alt="MCP 등록 승인 요청"><figcaption>⑤ 등록 승인</figcaption></figure>
+      <figure class="shot"><img src="captures/mcp-6-done.png" alt="설치 완료 메시지"><figcaption>⑥ 설치 완료 → 앱 다시 시작</figcaption></figure>
+    </div>
+    <p class="credit">화면 출처: 양상경 선생님(인천효성남초) 강의 자료 · Codex 화면이지만 Claude에서도 순서는 같습니다</p>
   </div>
 </section>
 
@@ -624,6 +707,20 @@ tr:last-child td{border-bottom:0}
   </div>
 </section>
 
+<section class="slide" data-title="Agent가 보는 화면" data-group="04">
+  <div class="wrap reveal">
+    <p class="eyebrow">04 · Agent가 보는 화면</p>
+    <h2 class="title">사람처럼 검색하고, 눌러 보고, 비교한다.</h2>
+    <div class="shots two" style="margin-top:14px">
+      <figure class="shot"><img src="captures/web-1-ask.png" alt="아이스크림몰 부탁 입력"><figcaption>① 메모를 읽고 부탁</figcaption></figure>
+      <figure class="shot"><img src="captures/web-3-browser.png" alt="앱 안에서 연 아이스크림몰"><figcaption>② 브라우저로 아이스크림몰 열기</figcaption></figure>
+      <figure class="shot"><img src="captures/web-mall-search.png" alt="아이스크림몰 검색 결과"><figcaption>③ 상품 검색</figcaption></figure>
+      <figure class="shot"><img src="captures/web-mall-product.png" alt="아이스크림몰 상품 상세"><figcaption>④ 상세 페이지에서 가격 확인</figcaption></figure>
+    </div>
+    <p class="credit">화면 출처: 양상경 선생님(인천효성남초) 강의 자료</p>
+  </div>
+</section>
+
 <!-- 05 -->
 <section class="slide section-cover" id="s5" data-title="05 미니 비서" data-group="05">
   <div class="wrap reveal">
@@ -678,6 +775,19 @@ tr:last-child td{border-bottom:0}
       <pre>12월 5일까지 겨울방학 생활 안내문 만들어야 해. 할 일로 넣어 줘.</pre>
     </div>
     <p class="lead" style="margin:16px 0 0;font-size:16px">확인: 카드에 체크·기록이 남고, HOME.md 표가 함께 바뀌었나요? 일정 앱(구글 캘린더 등)을 연결하면 일정까지 넣어 줍니다.</p>
+  </div>
+</section>
+
+<section class="slide" data-title="미니 비서 실제 화면" data-group="05">
+  <div class="wrap reveal">
+    <p class="eyebrow">05 · 미니 비서 실제 화면</p>
+    <h2 class="title">물으면 카드를 읽고, 끝나면 카드를 고친다.</h2>
+    <div class="shots three" style="margin-top:14px">
+      <figure class="shot"><img src="captures/mini-10-today.png" alt="오늘 뭐 해에 답한 화면"><figcaption>① "오늘 뭐 해?" → 마감 순 할 일</figcaption></figure>
+      <figure class="shot"><img src="captures/mini-11-diff.png" alt="카드 변경 내용"><figcaption>② 끝난 일 체크 · 기록 추가</figcaption></figure>
+      <figure class="shot"><img src="captures/mini-12-home.png" alt="HOME.md 미리보기"><figcaption>③ HOME.md 목록도 함께 갱신</figcaption></figure>
+    </div>
+    <p class="credit">화면 출처: 양상경 선생님(인천효성남초) 강의 자료</p>
   </div>
 </section>
 
@@ -862,6 +972,15 @@ var SURVEY_POST = "https://forms.gle/NH31fhLPMMwgRbXg7";   // 사후 설문
     } else if(k === 'Home'){ e.preventDefault(); go(0); }
     else if(k === 'End'){ e.preventDefault(); go(slides.length - 1); }
   });
+
+  // 스크린샷 크게 보기
+  var zoom = document.getElementById('zoom'), zoomImg = zoom.querySelector('img');
+  document.querySelectorAll('.shot img').forEach(function(img){
+    img.loading = 'lazy';
+    img.addEventListener('click', function(){ zoomImg.src = img.src; zoomImg.alt = img.alt; zoom.classList.add('open'); });
+  });
+  zoom.addEventListener('click', function(){ zoom.classList.remove('open'); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') zoom.classList.remove('open'); }, true);
 
   // 프롬프트 복사
   function copyText(text){
